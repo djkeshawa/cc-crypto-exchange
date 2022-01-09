@@ -9,4 +9,4 @@ steps:
 
 #Push the image  
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchangelatest']
+  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange:latest']
