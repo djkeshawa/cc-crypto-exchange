@@ -6,9 +6,9 @@ steps:
 #Build the image 
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
-  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/${BRANCH_NAME}:${SHORT_SHA}','.']
+  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:${SHORT_SHA}','.']
 
 #Push the image  
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
-  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/${BRANCH_NAME}:${SHORT_SHA}']
+  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:${SHORT_SHA}']
