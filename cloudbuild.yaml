@@ -1,0 +1,12 @@
+steps:
+#First Clone from Google Cloud Source Repository  
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone','https://github.com/djkeshawa/cc-crypto-exchange.git']
+
+#Build the image 
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build','-t','gcr.io/coastal-haven-337718/crypto-exchange:latest','.']
+
+#Push the image  
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push','gcr.io/coastal-haven-337718/crypto-exchange:latest']
