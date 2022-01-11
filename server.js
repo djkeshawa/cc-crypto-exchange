@@ -85,7 +85,8 @@ client.connect(err => {
     }
   const collection = client.db("sample_airbnb").collection("listingsAndReviews");
   console.log('trying to fetch data from collection')
-  const response = collection.findOne({_id:'10006546'})
-  console.log(response)
+  collection.findOne({_id:'10006546'}).then(data=>{
+    console.log(data)
+  })
   console.log(`Successfully connected`)
 });
