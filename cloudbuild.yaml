@@ -43,7 +43,7 @@ steps:
   - 'secret'
   - 'generic'
   - 'mongoPassword'
-  - '--from-literal=MONGO_PASSWORD=${MONGO_PASSWORD}'
+  - '--from-literal=MONGO_PASSWORD=${_MONGO_PASSWORD}'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
