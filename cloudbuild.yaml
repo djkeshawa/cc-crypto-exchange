@@ -6,12 +6,12 @@ steps:
 #Build the image 
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
-  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:${SHORT_SHA}','.']
+  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest','.']
 
 #Push the image  
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
-  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:${SHORT_SHA}']
+  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest']
 
 # This step deploys the new version of container image
 # in the hcrypto-cluster Kubernetes Engine cluster.
