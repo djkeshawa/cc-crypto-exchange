@@ -77,6 +77,8 @@ console.log(`Running on http://${HOST}:${PORT}`);
 const password = process.env.MONGO_PASSWORD
 const uri = `mongodb+srv://cryptouser:${password}@cluster0.30rla.mongodb.net/sample_airbnb?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
 client.connect(err => {
     if(err){
         console.log(err.message)
@@ -86,5 +88,4 @@ client.connect(err => {
   const response = collection.findOne({_id:'10006546'})
   console.log(response)
   console.log(`Successfully connected`)
-  client.close();
 });
