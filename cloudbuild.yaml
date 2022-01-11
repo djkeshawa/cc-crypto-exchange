@@ -26,7 +26,7 @@ steps:
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
 
 # This step is to deploy the service
-  - name: 'gcr.io/cloud-builders/kubectl'
+- name: 'gcr.io/cloud-builders/kubectl'
   id: Service
   args:
   - 'apply'
