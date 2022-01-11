@@ -80,9 +80,9 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
     if(err){
         console.log(err.message)
-        throw err
     }
   const collection = client.db("sample_airbnb").collection("listingsAndReviews");
+  console.log('trying to fetch data from collection')
   const response = collection.findOne({_id:'10006546'})
   console.log(response)
   console.log(`Successfully connected`)
