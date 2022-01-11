@@ -78,6 +78,10 @@ const password = process.env.MONGO_PASSWORD
 const uri = `mongodb+srv://cryptouser:${password}@cluster0.30rla.mongodb.net/sample_airbnb?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
+    if(err){
+        console.log(err.message)
+        throw err
+    }
   const collection = client.db("sample_airbnb").collection("listingsAndReviews");
   console.log(`Successfully connected`)
   client.close();
