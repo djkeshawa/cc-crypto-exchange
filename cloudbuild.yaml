@@ -35,3 +35,15 @@ steps:
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Secrets
+  args:
+  - 'create'
+  - 'secret'
+  - 'generic'
+  - 'mongoPassword'
+  - '--from-literal=MONGO_PASSWORD=${MONGO_PASSWORD}'
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'

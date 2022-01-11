@@ -1,14 +1,17 @@
 {
-    "name": "docker_web_app",
-    "version": "1.0.0",
-    "description": "Node.js on Docker",
-    "author": "First Last <first.last@example.com>",
-    "main": "server.js",
-    "scripts": {
-      "start": "node server.js"
-    },
-    "dependencies": {
-      "express": "^4.16.1"
-    }
+  "name": "docker_web_app",
+  "version": "1.0.0",
+  "description": "Node.js on Docker",
+  "author": "First Last <first.last@example.com>",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.16.1",
+    "mongodb": "^4.3.0"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7"
   }
-  
+}
