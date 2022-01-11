@@ -79,6 +79,6 @@ const uri = `mongodb+srv://cryptouser:${password}@cluster0.30rla.mongodb.net/sam
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const collection = client.db("sample_airbnb").collection("listingsAndReviews");
-  console.log(`Successfully connected: ${JSON.stringify(collection)}`)
+  console.log(`Successfully connected`)
   client.close();
 });
