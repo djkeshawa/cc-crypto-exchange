@@ -5,7 +5,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: crypto-exchange-v1
+    app: crypto-exchange-v2
   ports:
   - port: 80
     targetPort: 8080
