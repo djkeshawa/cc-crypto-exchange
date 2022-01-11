@@ -13,6 +13,18 @@ steps:
   id: Push
   args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest']
 
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Secrets
+  args:
+  - 'create'
+  - 'secret'
+  - 'generic'
+  - 'mongoPassword'
+  - '--from-literal=MONGO_PASSWORD=${_MONGO_PASSWORD}'
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
+
 # This step deploys the new version of container image
 # in the hcrypto-cluster Kubernetes Engine cluster.
 - name: 'gcr.io/cloud-builders/kubectl'
@@ -36,14 +48,3 @@ steps:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
 
-- name: 'gcr.io/cloud-builders/kubectl'
-  id: Secrets
-  args:
-  - 'create'
-  - 'secret'
-  - 'generic'
-  - 'mongoPassword'
-  - '--from-literal=MONGO_PASSWORD=${_MONGO_PASSWORD}'
-  env:
-  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
