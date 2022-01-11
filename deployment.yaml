@@ -36,5 +36,5 @@ spec:
           - name: MONGO_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: mongoPassword
+                name: mongopassword
                 key: MONGO_PASSWORD

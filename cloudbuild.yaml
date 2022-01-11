@@ -19,7 +19,7 @@ steps:
   - 'create'
   - 'secret'
   - 'generic'
-  - 'mongoPassword'
+  - 'mongopassword'
   - '--from-literal=MONGO_PASSWORD=${_MONGO_PASSWORD}'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
