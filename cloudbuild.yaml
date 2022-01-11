@@ -12,3 +12,26 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
   args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:${SHORT_SHA}']
+
+# This step deploys the new version of container image
+# in the hcrypto-cluster Kubernetes Engine cluster.
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Deploy
+  args:
+  - 'apply'
+  - '-f'
+  - 'deployment.yaml'
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
+
+# This step is to deploy the service
+  - name: 'gcr.io/cloud-builders/kubectl'
+  id: Service
+  args:
+  - 'apply'
+  - '-f'
+  - 'service.yaml'
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
