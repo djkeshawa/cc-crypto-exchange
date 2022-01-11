@@ -13,7 +13,7 @@ steps:
   id: Push
   args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest']
 
-  - name: 'gcr.io/cloud-builders/kubectl'
+- name: 'gcr.io/cloud-builders/kubectl'
   id: SecretsDelete
   args:
   - 'delete'
