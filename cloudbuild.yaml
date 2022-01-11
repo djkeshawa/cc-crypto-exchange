@@ -13,6 +13,17 @@ steps:
   id: Push
   args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest']
 
+  - name: 'gcr.io/cloud-builders/kubectl'
+  id: SecretsDelete
+  args:
+  - 'delete'
+  - 'secret'
+  - 'mongopassword'
+  - '--ignore-not-found
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
+
 - name: 'gcr.io/cloud-builders/kubectl'
   id: Secrets
   args:
