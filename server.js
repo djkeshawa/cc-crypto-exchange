@@ -83,6 +83,8 @@ client.connect(err => {
         throw err
     }
   const collection = client.db("sample_airbnb").collection("listingsAndReviews");
+  const response = collection.findOne({_id:'10006546'})
+  console.log(response)
   console.log(`Successfully connected`)
   client.close();
 });
