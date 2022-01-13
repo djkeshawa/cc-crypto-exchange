@@ -6,16 +6,17 @@ steps:
 #Build the image 
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
-  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA','.']
+  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest','.']
 
 #Push the image  
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
-  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA']
+  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest']
 
 - name: ubuntu
   id: 'Setting Image Tag'
   args: ['bash','-c','sed -i "s,IMAGE_NAME,us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA," infra/prod/deployment.yaml']
+
 
 - name: 'gcr.io/cloud-builders/kubectl'
   id: SecretsDelete
@@ -24,9 +25,10 @@ steps:
   - 'secret'
   - 'mongopassword'
   - '--ignore-not-found'
+  - '--namespace=qa'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
 
 - name: 'gcr.io/cloud-builders/kubectl'
   id: Secrets
@@ -36,9 +38,10 @@ steps:
   - 'generic'
   - 'mongopassword'
   - '--from-literal=MONGO_PASSWORD=${_MONGO_PASSWORD}'
+  - '--namespace=qa'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
 
 # This step deploys the new version of container image
 # in the hcrypto-cluster Kubernetes Engine cluster.
@@ -47,10 +50,11 @@ steps:
   args:
   - 'apply'
   - '-f'
-  - 'infra/prod/deployment.yaml'
+  - 'infra/deployment.yaml'
+  - '--namespace=qa'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
 
 # This step is to deploy the service
 - name: 'gcr.io/cloud-builders/kubectl'
@@ -58,8 +62,9 @@ steps:
   args:
   - 'apply'
   - '-f'
-  - 'infra/prod/service.yaml'
+  - 'infra/service.yaml'
+  - '--namespace=qa'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
 
