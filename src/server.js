@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const logger = require('./utils/logger');
 const router = require('./route');
 
 // Constants
@@ -18,4 +19,4 @@ server.get('/', (req, res) => {
 });
 
 server.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+logger.info(`Running on http://${HOST}:${PORT}`);
