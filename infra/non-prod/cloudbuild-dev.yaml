@@ -50,7 +50,7 @@ steps:
   args:
   - 'apply'
   - '-f'
-  - 'infra/deployment.yaml'
+  - 'infra/prod/deployment.yaml'
   - '--namespace=dev'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
@@ -62,7 +62,7 @@ steps:
   args:
   - 'apply'
   - '-f'
-  - 'infra/service.yaml'
+  - 'infra/prod/service.yaml'
   - '--namespace=dev'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
