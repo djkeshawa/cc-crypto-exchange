@@ -43,7 +43,7 @@ steps:
   args:
   - 'apply'
   - '-f'
-  - 'deployment.yaml'
+  - 'infra/deployment.yaml'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'
@@ -54,7 +54,7 @@ steps:
   args:
   - 'apply'
   - '-f'
-  - 'service.yaml'
+  - 'infra/service.yaml'
   env:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster'

@@ -5,13 +5,60 @@
   "author": "First Last <first.last@example.com>",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/server.js",
+    "dev": "nodemon --exec node src/server.js",
+    "lint": "eslint . --fix",
+    "pre-commit-lint": "eslint .",
+    "test": "npm-run-all --aggregate-output cov:clean -p cov:unit cov:integration cov:functional -s cov:summary-preset cov:report",
+    "test:integration": "npm-run-all cov:clean cov:integration",
+    "test:unit": "npm-run-all cov:clean cov:unit",
+    "test:functional": "npm-run-all cov:clean cov:functional",
+    "cov:clean": "rimraf .nyc_output && rimraf coverage",
+    "cov:unit": "jest --colors",
+    "cov:integration": "jest --colors -c jest.config.integration.js",
+    "cov:functional": "jest --forceExit --colors -c jest.config.functional.js",
+    "cov:functional:docker": "npm-run-all -p -r serve cy:docker:start",
+    "cov:summary-preset": "mkdir -p .nyc_output; cp coverage/unit/coverage-final.json .nyc_output/unit.json; cp coverage/integration/coverage-final.json .nyc_output/integration.json; cp coverage/functional/coverage-final.json .nyc_output/functional.json",
+    "cov:report": "nyc report --reporter html --reporter lcov --report-dir ./coverage/summary"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.16.1",
-    "mongodb": "^4.3.0"
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1",
+    "mongodb": "^4.3.0",
+    "nodemon": "^2.0.15"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "index.js"
+    ],
+    "transformIgnorePatterns": [
+      "./node_modules/"
+    ]
   },
   "devDependencies": {
-    "jest": "^27.4.7"
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.11.5",
+    "@babel/register": "^7.9.0",
+    "@jest/globals": "^26.6.1",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^26.5.0",
+    "babel-plugin-istanbul": "^6.0.0",
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "jest": "^27.4.7",
+    "jest-watch-typeahead": "0.4.2",
+    "karma-coverage-istanbul-reporter": "^3.0.3",
+    "npm-run-all": "^4.1.5",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.14.3",
+    "supertest": "^6.1.4",
+    "testcontainers": "^7.11.1",
+    "winston": "^3.1.0",
+    "winston-daily-rotate-file": "^3.3.3"
   }
 }
