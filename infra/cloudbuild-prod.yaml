@@ -6,12 +6,16 @@ steps:
 #Build the image 
 - name: 'gcr.io/cloud-builders/docker'
   id: Build
-  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest','.']
+  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA','.']
 
 #Push the image  
 - name: 'gcr.io/cloud-builders/docker'
   id: Push
-  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest']
+  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA']
+
+- name: ubuntu
+  id: 'Setting Init Image Tag'
+  args: ['bash','-c','sed -i "s,IMAGE_NAME,us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA," infra/deployment.yaml']
 
 - name: 'gcr.io/cloud-builders/kubectl'
   id: SecretsDelete
