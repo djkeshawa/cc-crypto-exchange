@@ -7,13 +7,13 @@ const getCoinRate = async (req, res) => {
   try {
     const response = await cryptoService.getCoinRate(coinType);
     if (isEmpty(response) || isNil(response)) {
-      res
+      return res
         .status(HTTP_STATUSES.NOT_FOUND)
         .send({ message: 'Rate for the requested coin not found' });
     }
-    res.status(HTTP_STATUSES.OK).send(response);
+    return res.status(HTTP_STATUSES.OK).send(response);
   } catch (error) {
-    res
+    return res
       .status(HTTP_STATUSES.INTERNAL_SERVER_ERROR)
       .send({ message: error.message });
   }
@@ -23,26 +23,36 @@ const purchaseCoin = (req, res) => {
   const transactionInfo = req.body;
 
   if (!transactionInfo.coinType || !transactionInfo.amount) {
-    res.status(400).send({ message: 'Incorrect request body parameters' });
+    return res
+      .status(400)
+      .send({ message: 'Incorrect request body parameters' });
   }
   const response = {
     message: 'purchase successful',
     purchaseInfo: transactionInfo
   };
-  res.status(200).send(response);
+  return res.status(200).send(response);
 };
 
-const sellCoin = (req, res) => {
-  const transactionInfo = req.body;
-
-  if (!transactionInfo.coinType || !transactionInfo.amount) {
-    res.status(400).send({ message: 'Incorrect request body parameters' });
+const sellCoin = async (req, res) => {
+  const { id, coinType, amount } = req.body;
+  try {
+    if (!coinType || !amount) {
+      return res
+        .status(400)
+        .send({ message: 'Incorrect request body parameters' });
+    }
+    const response = await cryptoService.sellCoinByType(id, coinType, amount);
+    const resBody = {
+      message: 'successfully sold',
+      transactionInfo: response
+    };
+    return res.status(200).send(resBody);
+  } catch (error) {
+    return res
+      .status(HTTP_STATUSES.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message });
   }
-  const response = {
-    message: 'successfully sold',
-    purchaseInfo: transactionInfo
-  };
-  res.status(200).send(response);
 };
 
 const updateTransaction = (req, res) => {
