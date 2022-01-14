@@ -23,6 +23,8 @@ const getDb = () => {
     client.connect(err => {
       if (err) {
         logger.error(err.message);
+        db = null;
+        client = null;
         reject(err);
       }
       db = client.db('crypto_exchange');
