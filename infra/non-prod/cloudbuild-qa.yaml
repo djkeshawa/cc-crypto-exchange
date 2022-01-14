@@ -68,8 +68,8 @@ steps:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
 
- - name: gcr.io/cloud-builders/gcloud
-   entrypoint: "bash"
+ - name: 'gcr.io/cloud-builders/gcloud'
+   entrypoint: 'bash'
    args:
    - "-c"
    - |
