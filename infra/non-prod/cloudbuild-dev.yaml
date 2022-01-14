@@ -3,6 +3,12 @@ steps:
 - name: 'gcr.io/cloud-builders/git'
   args: ['clone','https://github.com/djkeshawa/cc-crypto-exchange.git']
 
+- name: node
+  id: Quality Gate
+  entrypoint: npm
+  args: ['test:unit']
+
+
 #Build the image 
 - name: 'gcr.io/cloud-builders/docker'
   id: Build

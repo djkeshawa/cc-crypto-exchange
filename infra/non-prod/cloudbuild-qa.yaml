@@ -68,3 +68,8 @@ steps:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
 
+- name: 'curlimages/curl'
+  id: API Test
+  args: ['https://api.runscope.com/radar/$_TEST_TRIGGER_TOKEN/trigger']
+  waitFor: ['Deploy', 'Service']
+

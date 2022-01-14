@@ -29,33 +29,26 @@
     "mongodb": "^4.3.0",
     "nodemon": "^2.0.15"
   },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "index.js"
-    ],
-    "transformIgnorePatterns": [
-      "./node_modules/"
-    ]
-  },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.11.5",
     "@babel/register": "^7.9.0",
     "@jest/globals": "^26.6.1",
-    "babel-eslint": "^10.0.1",
     "babel-jest": "^26.5.0",
     "babel-plugin-istanbul": "^6.0.0",
+    "babel-eslint": "^10.0.1",
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "jest": "^27.4.7",
-    "jest-watch-typeahead": "0.4.2",
-    "karma-coverage-istanbul-reporter": "^3.0.3",
-    "npm-run-all": "^4.1.5",
+    "jest": "^26.5.0",
+    "nodemon": "^1.18.4",
     "pre-commit": "^1.2.2",
     "prettier": "^1.14.3",
+    "sonarqube-scanner": "^2.7.0",
+    "husky": "0.14.3",
+    "nyc": "^15.1.0",
+    "npm-run-all": "^4.1.5",
     "supertest": "^6.1.4",
     "testcontainers": "^7.11.1",
     "winston": "^3.1.0",
@@ -65,5 +58,3 @@
     "pre-commit-lint"
   ]
 }
-
-
