@@ -73,11 +73,4 @@ steps:
   args: ['-X','GET','https://api.runscope.com/radar/${_TEST_TRIGGER_TOKEN}/trigger']
   waitFor: ['Deploy', 'Service']
 
- - name: gcr.io/cloud-builders/gcloud
-   entrypoint: "bash"
-   args:
-   - "-c"
-   - |
-       RESPONSE=$(curl -i https://api.runscope.com/radar/${_TEST_TRIGGER_TOKEN}/trigger | grep HTTP | cut -d' ' -f2)
-       if [ "201" != "$$RESPONSE" ]; then exit 1; fi
 
