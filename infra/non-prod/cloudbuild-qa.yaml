@@ -68,7 +68,7 @@ steps:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
 
-- name: ''gcr.io/gcp-runtimes/ubuntu_18_0_4'
+- name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   id: API Test
   entrypoint: 'curl'
   args: ['https://api.runscope.com/radar/$_TEST_TRIGGER_TOKEN/trigger']
