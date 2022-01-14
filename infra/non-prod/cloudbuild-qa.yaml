@@ -71,6 +71,6 @@ steps:
 - name: 'gcr.io/gcp-runtimes/ubuntu_18_0_4'
   id: API Test
   entrypoint: 'curl'
-  args: ['https://api.runscope.com/radar/$_TEST_TRIGGER_TOKEN/trigger']
+  args: ['https://api.runscope.com/radar/${_TEST_TRIGGER_TOKEN}/trigger']
   waitFor: ['Deploy', 'Service']
 
