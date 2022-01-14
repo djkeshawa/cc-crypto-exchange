@@ -11,7 +11,7 @@ steps:
 - name: node
   id: Quality Gate
   entrypoint: npm
-  args: ['test:unit']
+  args: ['run','test:unit']
 
 
 #Build the image 
