@@ -68,12 +68,12 @@ steps:
   - 'CLOUDSDK_COMPUTE_REGION=us-central1'
   - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
 
- - name: 'gcr.io/cloud-builders/gcloud'
-   entrypoint: 'bash'
-   args:
-   - "-c"
-   - |
-       RESPONSE=$(curl -i https://api.runscope.com/radar/${_TEST_TRIGGER_TOKEN}/trigger | grep HTTPS | cut -d' ' -f2)
-       if [ "201" != "$$RESPONSE" ]; then exit 1; fi
+- name: 'gcr.io/cloud-builders/gcloud'
+  entrypoint: 'bash'
+  args:
+  - "-c"
+  - |
+      RESPONSE=$(curl -i https://api.runscope.com/radar/${_TEST_TRIGGER_TOKEN}/trigger | grep HTTPS | cut -d' ' -f2)
+      if [ "201" != "$$RESPONSE" ]; then exit 1; fi
 
 
