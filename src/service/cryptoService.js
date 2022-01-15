@@ -70,9 +70,9 @@ const purchaseCoinByType = async (id, coinType, amount) => {
     );
   } catch (error) {
     logger.error(
-      `service:sellCoinByType: unexpected error occurred while trying purchase coin. Error: ${error.message}`
+      `service:purchaseCoinByType: unexpected error occurred while trying purchase coin. Error: ${error.message}`
     );
-    throw new Error(`service:sellCoinByType: ${error}`);
+    throw new Error(`service:purchaseCoinByType: ${error}`);
   }
 };
 

@@ -7,7 +7,9 @@ let db;
 
 const getMongoClient = () => {
   const password = process.env.MONGO_PASSWORD;
-  const uri = `mongodb+srv://cryptouser:${password}@cluster0.30rla.mongodb.net/sample_airbnb?retryWrites=true&w=majority`;
+  const uri =
+    process.env.ATLAS_TEST_URL ||
+    `mongodb+srv://cryptouser:${password}@cluster0.30rla.mongodb.net/sample_airbnb?retryWrites=true&w=majority`;
   return new MongoClient(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -101,5 +103,7 @@ const updateCoinTransaction = async (id, coinType, amount) => {
 module.exports = {
   getCoinRateByCoinType,
   setCoinTransaction,
-  updateCoinTransaction
+  updateCoinTransaction,
+  getDb,
+  getMongoClient
 };
