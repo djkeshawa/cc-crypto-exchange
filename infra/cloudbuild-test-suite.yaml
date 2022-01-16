@@ -9,11 +9,11 @@ steps:
   args: ['install']
 
 - name: node
-  id: Quality Gate
+  id: Quality Gate Unit
   entrypoint: npm
   args: ['run','test:unit']
 
 - name: node
-  id: Quality Gate
+  id: Quality Gate Integration
   entrypoint: npm
   args: ['run','test:integration']
