@@ -1,0 +1,14 @@
+steps:
+#First Clone from Google Cloud Source Repository  
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone','https://github.com/djkeshawa/cc-crypto-exchange.git']
+
+- name: node
+  id: Install Packages
+  entrypoint: npm
+  args: ['install']
+
+- name: node
+  id: Quality Gate Unit
+  entrypoint: npm
+  args: ['run','test:unit']

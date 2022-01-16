@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crypto-exchange-02
+  name: crypto-exchange-01
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: crypto-exchange-v2
+      app: crypto-exchange-v1
   template:
     metadata:
       labels:
-        app: crypto-exchange-v2
+        app: crypto-exchange-v1
     spec:
       containers:
       - name: crypto-exchange
-        image: us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:latest
+        image: IMAGE_NAME
         livenessProbe:
              httpGet:
                 path: /

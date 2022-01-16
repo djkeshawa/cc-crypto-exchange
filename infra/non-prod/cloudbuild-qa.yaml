@@ -1,0 +1,77 @@
+steps:
+#First Clone from Google Cloud Source Repository  
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone','https://github.com/djkeshawa/cc-crypto-exchange.git']
+
+#Build the image 
+- name: 'gcr.io/cloud-builders/docker'
+  id: Build
+  args: ['build','-t','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA','.']
+
+#Push the image  
+- name: 'gcr.io/cloud-builders/docker'
+  id: Push
+  args: ['push','us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA']
+
+- name: ubuntu
+  id: 'Setting Image Tag'
+  args: ['bash','-c','sed -i "s,IMAGE_NAME,us-central1-docker.pkg.dev/coastal-haven-337718/crypto-exchange/crypto:$SHORT_SHA," infra/deployment.yaml']
+
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: SecretsDelete
+  args:
+  - 'delete'
+  - 'secret'
+  - 'mongopassword'
+  - '--ignore-not-found'
+  - '--namespace=qa'
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
+
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Secrets
+  args:
+  - 'create'
+  - 'secret'
+  - 'generic'
+  - 'mongopassword'
+  - '--from-literal=MONGO_PASSWORD=${_MONGO_PASSWORD}'
+  - '--namespace=qa'
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
+
+# This step deploys the new version of container image
+# in the hcrypto-cluster Kubernetes Engine cluster.
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Deploy
+  args:
+  - 'apply'
+  - '-f'
+  - 'infra/deployment.yaml'
+  - '--namespace=qa'
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
+
+# This step is to deploy the service
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Service
+  args:
+  - 'apply'
+  - '-f'
+  - 'infra/service.yaml'
+  - '--namespace=qa'
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-central1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=crypto-cluster-non-prod'
+
+- name: 'gcr.io/cloud-builders/curl'
+  id: API Test
+  args: ['-X','GET','https://api.runscope.com/radar/${_TEST_TRIGGER_TOKEN}/trigger']
+  waitFor: ['Deploy', 'Service']
+
+
+
