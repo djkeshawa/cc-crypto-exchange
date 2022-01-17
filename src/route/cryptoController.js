@@ -2,6 +2,50 @@ const { isEmpty, isNil } = require('lodash');
 const cryptoService = require('../service/cryptoService');
 const { HTTP_STATUSES } = require('../common/constants');
 
+/**
+ * @swagger
+ * /crypto/rate/:coinType:
+ *   get:
+ *     summary: Get the rate for a given coin type
+ *     produces:
+ *       "application/json"
+ *     tags:
+ *       - "Get coin rate"
+ *     parameters:
+ *       - name: coinType
+ *         in: path
+ *         description: "Crypto currency type"
+ *         required: true
+ *         type: "string"
+ *     responses:
+ *       200:
+ *         schema:
+ *           type: object
+ *           properties:
+ *             _id:
+ *               type: "string"
+ *             coinType:
+ *               type: "string"
+ *             amount:
+ *               type: "string"
+ *         examples:
+ *           application/json: {
+ *             "_id": "61e188db8c523f67436cf6ad",
+ *             "coinType": "BIT",
+ *             "amount": "10"
+ *           }
+ *       404:
+ *         description: Not found
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: string
+ *         examples:
+ *           application/json: {
+ *             "message": "Rate for the requested coin not found",
+ *           }
+ */
 const getCoinRate = async (req, res) => {
   const { coinType } = req.params;
   try {
@@ -18,22 +62,110 @@ const getCoinRate = async (req, res) => {
       .send({ message: error.message });
   }
 };
-
-const purchaseCoin = (req, res) => {
-  const transactionInfo = req.body;
-
-  if (!transactionInfo.coinType || !transactionInfo.amount) {
+/**
+ * @swagger
+ * /crypto/buy:
+ *   post:
+ *     summary: purchase coin
+ *     produces:
+ *       "application/json"
+ *     tags:
+ *       - "buy coin"
+ *     parameters:
+ *       - name: coinType
+ *         in: body
+ *         description: "Crypto currency type"
+ *         required: true
+ *         type: "string"
+ *       - name: body
+ *         in: path
+ *         description: "Crypto currency amount"
+ *         required: true
+ *         type: "string"
+ *       - name: _id
+ *         in: body
+ *         description: "transaction id"
+ *         required: true
+ *         type: "string"
+ *     responses:
+ *       200:
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: "string"
+ *             transactionInfo:
+ *               type: object
+ *         examples:
+ *           application/json: {
+ *             "_id": "successfully purchased",
+ *             "transactionInfo": '{"acknowledged": true,"modifiedCount": 0,"upsertedId": null,"upsertedCount": 0,"matchedCount": 0}',
+ *           }
+ */
+const purchaseCoin = async (req, res) => {
+  const { id, coinType, amount } = req.body;
+  try {
+    if (!coinType || !amount) {
+      return res
+        .status(400)
+        .send({ message: 'Incorrect request body parameters' });
+    }
+    const response = await cryptoService.purchaseCoinByType(
+      id,
+      coinType,
+      amount
+    );
+    const resBody = {
+      message: 'successfully sold',
+      transactionInfo: response
+    };
+    return res.status(200).send(resBody);
+  } catch (error) {
     return res
-      .status(400)
-      .send({ message: 'Incorrect request body parameters' });
+      .status(HTTP_STATUSES.INTERNAL_SERVER_ERROR)
+      .send({ message: error.message });
   }
-  const response = {
-    message: 'purchase successful',
-    purchaseInfo: transactionInfo
-  };
-  return res.status(200).send(response);
 };
-
+/**
+ * @swagger
+ * /crypto/sell:
+ *   post:
+ *     summary: sell coin
+ *     produces:
+ *       "application/json"
+ *     tags:
+ *       - "sell coin"
+ *     parameters:
+ *       - name: coinType
+ *         in: body
+ *         description: "Crypto currency type"
+ *         required: true
+ *         type: "string"
+ *       - name: body
+ *         in: path
+ *         description: "Crypto currency amount"
+ *         required: true
+ *         type: "string"
+ *       - name: _id
+ *         in: body
+ *         description: "transaction id"
+ *         required: true
+ *         type: "string"
+ *     responses:
+ *       200:
+ *         schema:
+ *           type: object
+ *           properties:
+ *             message:
+ *               type: "string"
+ *             transactionInfo:
+ *               type: object
+ *         examples:
+ *           application/json: {
+ *             "_id": "successfully sold",
+ *             "transactionInfo": '{"acknowledged": true,"modifiedCount": 0,"upsertedId": null,"upsertedCount": 0,"matchedCount": 0}',
+ *           }
+ */
 const sellCoin = async (req, res) => {
   const { id, coinType, amount } = req.body;
   try {
