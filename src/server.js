@@ -39,7 +39,7 @@ server.use('/crypto', router);
 server.use(cors());
 
 server.get('/', (req, res) => {
-  res.send('Hello World V2');
+  res.send('Hello World V1.1.0');
 });
 
 server.listen(PORT, HOST);
