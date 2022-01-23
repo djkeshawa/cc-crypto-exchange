@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: crypto-exchange-01
+  name: crypto-exchange-01.1.0
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: crypto-exchange-v1
+      app: crypto-exchange-v1.1.0
   template:
     metadata:
       labels:
-        app: crypto-exchange-v1
+        app: crypto-exchange-v1.1.0
     spec:
       containers:
       - name: crypto-exchange
